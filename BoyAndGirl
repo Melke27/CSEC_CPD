@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+int main() {
+    string username;
+    cin >> username;
+ 
+    bool ch_p[26] = {false};
+    int dis_c = 0;
+ 
+    for (char ch : username) {
+        int index = ch - 'a';
+        if (!ch_p[index]) {
+            ch_p[index] = true;
+            dis_c++;
+        }
+    }
+ 
+    if (dis_c % 2 == 0) {
+        cout << "CHAT WITH HER!" << endl;
+    } else {
+        cout << "IGNORE HIM!" << endl;
+    }
+    return 0;
+}
