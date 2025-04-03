@@ -1,0 +1,32 @@
+
+class Solution {
+public:
+    vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+        vector<int> result, extra;
+        
+        for (int num : arr2) {
+            for (int i = 0; i < arr1.size(); i++) {
+                if (arr1[i] == num) {
+                    result.push_back(arr1[i]);
+                    arr1[i] = -1;
+                }
+            }
+        }
+        
+        for (int num : arr1) {
+            if (num != -1) {
+                extra.push_back(num);
+            }
+        }
+        for (int i = 0; i < extra.size(); i++) {
+            for (int j = i + 1; j < extra.size(); j++) {
+                if (extra[i] > extra[j]) {
+                    swap(extra[i], extra[j]);
+                }
+            }
+        }
+        
+        result.insert(result.end(), extra.begin(), extra.end());
+        return result;
+    }
+};
