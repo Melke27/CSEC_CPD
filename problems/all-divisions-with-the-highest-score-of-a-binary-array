@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> maxScoreIndices(vector<int>& nums) {
+        int n = nums.size();
+        int totalOnes = count(nums.begin(), nums.end(), 1);  // Count total 1s in the array
+        int leftZeros = 0, rightOnes = totalOnes;
+        int maxScore = 0;
+        vector<int> result;
+        
+        for (int i = 0; i <= n; ++i) {
+            int score = leftZeros + rightOnes;
+            
+            if (score > maxScore) {
+                maxScore = score;
+                result = {i};  // Reset with new max score index
+            } else if (score == maxScore) {
+                result.push_back(i);
+            }
+            
+            if (i < n) {
+                if (nums[i] == 0) ++leftZeros;
+                else --rightOnes;
+            }
+        }
+        
+        return result;
+    }
+};
