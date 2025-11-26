@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n >> k;
+    int a[500005];
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    int count[1000005] = {0};
+    int different = 0;
+    int left = 0, bestL = 0, bestR = 0;
+
+    for (int right = 0; right < n; right++) {
+        if (count[a[right]] == 0) different++;
+        count[a[right]]++;
+
+        while (different > k) {
+            count[a[left]]--;
+            if (count[a[left]] == 0) different--;
+            left++;
+        }
+
+        if (right - left > bestR - bestL) {
+            bestL = left;
+            bestR = right;
+        }
+    }
+
+    cout << bestL + 1 << " " << bestR + 1 << "\n";
+}
