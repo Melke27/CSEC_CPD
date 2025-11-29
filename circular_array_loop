@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int next(vector<int>& nums, int i) {
+        int n = nums.size();
+        return ((i + nums[i]) % n + n) % n;
+    }
+
+    bool circularArrayLoop(vector<int>& nums) {
+        int n = nums.size();
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0) continue;
+            bool forward = nums[i] > 0;
+            int slow = i, fast = i;
+
+            while (true) {
+                int nextSlow = next(nums, slow);
+                int nextFast = next(nums, fast);
+                nextFast = next(nums, nextFast);
+
+                if ((nums[nextSlow] > 0) != forward || (nums[nextFast] > 0) != forward)
+                    break;
+                if (nextSlow == slow || nextFast == fast)
+                    break;
+
+                slow = nextSlow;
+                fast = nextFast;
+
+                if (slow == fast)
+                    return true;
+            }
+
+            int j = i;
+            while (nums[j] != 0 && (nums[j] > 0) == forward) {
+                int temp = next(nums, j);
+                nums[j] = 0;
+                j = temp;
+            }
+        }
+        return false;
+    }
+};
